@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cargando encuesta...</title>
+  <style>
+    body { background: #0b0e14; color: #f1f5f9; font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+  </style>
+</head>
+<body>
+  <p>Abriendo encuesta...</p>
+  <script>
+    fetch('./url.txt?t=' + Date.now())
+      .then(r => r.text())
+      .then(url => {
+        const destino = url.trim();
+        if (destino.startsWith('https://')) {
+          window.location.replace(destino + window.location.search);
+        } else {
+          document.body.innerHTML = '<p>La encuesta aún no está activa. Intenta en unos segundos.</p>';
+        }
+      })
+      .catch(() => {
+        document.body.innerHTML = '<p>Error de conexión. Reintenta escanear el QR.</p>';
+      });
+  </script>
+</body>
+</html>
